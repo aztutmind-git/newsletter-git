@@ -7,5 +7,14 @@
         "date": "2026-09-13",
         "status": "published",
         "slug": "evidence-based-management"
+    },
+    {
+        "id": "article-002",
+        "file": "article-002.json",
+        "title": "Three Meals a Day: Rethinking Welfare for the World's Delivery Riders",
+        "category": "Other",
+        "date": "2026-09-13",
+        "status": "draft",
+        "slug": "three-meals-a-day-rethinking-welfare-for-the-worlds-delivery-riders"
     }
 ]
