@@ -1,0 +1,11 @@
+[
+    {
+        "id": "article-001",
+        "file": "json/article-001.json",
+        "title": "Evidence-Based Management",
+        "category": "Management",
+        "date": "2026-09-13",
+        "status": "published",
+        "slug": "evidence-based-management"
+    }
+]

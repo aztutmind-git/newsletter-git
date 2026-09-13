@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AztutMind | Articles</title>
+
+<style>
+
+:root {
+    --bg: #f5f3ee;
+    --white: #ffffff;
+    --navy: #172033;
+    --blue: #315a78;
+    --gold: #c49a4b;
+    --text: #29313d;
+    --muted: #737b86;
+    --border: #dedbd4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+
+header {
+    background: var(--navy);
+    color: white;
+    padding: 22px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+/* HERO */
+
+.hero {
+    max-width: 1100px;
+    margin: 70px auto 40px;
+    padding: 0 25px;
+}
+
+.hero-category {
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(42px, 7vw, 72px);
+    line-height: 1.05;
+    color: var(--navy);
+    margin: 0 0 20px;
+}
+
+.hero p {
+    max-width: 750px;
+    color: var(--muted);
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+/* CONTROLS */
+
+.controls {
+    max-width: 1100px;
+    margin: 0 auto 35px;
+    padding: 0 25px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search {
+    flex: 1;
+    min-width: 240px;
+}
+
+.search input,
+.controls select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+}
+
+/* ARTICLES */
+
+.article-grid {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 25px 80px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.article-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: 0.2s;
+}
+
+.article-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.08);
+}
+
+.card-image {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.card-placeholder {
+    width: 100%;
+    height: 210px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e5e0d5,
+            #f7f4ed
+        );
+
+    color: var(--blue);
+
+    font-family: Georgia, serif;
+    font-size: 26px;
+}
+
+.card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-category {
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 25px;
+    line-height: 1.25;
+    margin-bottom: 12px;
+}
+
+.card-summary {
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.card-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+.read-more {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    color: var(--gold);
+}
+
+/* LOADING */
+
+.loading {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 50px 25px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* ERROR */
+
+.error-box {
+    max-width: 900px;
+    margin: 40px auto 80px;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e6bdbb;
+    border-radius: 12px;
+}
+
+.error-box h2 {
+    font-family: Georgia, serif;
+    color: #8d3533;
+}
+
+.error-box p {
+    line-height: 1.7;
+}
+
+.error-details {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f5f3ee;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* EMPTY */
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 70px 20px;
+    color: var(--muted);
+}
+
+/* FOOTER */
+
+footer {
+    background: var(--navy);
+    color: #d8dce2;
+    padding: 40px 6%;
+    text-align: center;
+    font-size: 13px;
+}
+
+footer strong {
+    color: white;
+}
+
+/* MOBILE */
+
+@media(max-width: 850px) {
+
+    .article-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 15px;
+    }
+
+    .hero {
+        margin-top: 45px;
+    }
+
+    .article-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        Aztut<span>Mind</span>
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            Articles
+        </a>
+
+        <a href="https://aztutmind.com">
+            Home
+        </a>
+
+        <a href="admin.html">
+            Admin
+        </a>
+
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-category">
+        AztutMind Journal
+    </div>
+
+    <h1>
+        Ideas that help us
+        learn, think and grow.
+    </h1>
+
+    <p>
+        Explore articles on management, technology,
+        education, data, leadership, science and
+        evidence-based thinking.
+    </p>
+
+</section>
+
+
+<div class="controls">
+
+    <div class="search">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search articles..."
+            oninput="applyFilters()"
+        >
+
+    </div>
+
+    <div>
+
+        <select
+            id="categoryFilter"
+            onchange="applyFilters()"
+        >
+
+            <option value="">
+                All Categories
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+<div id="loading" class="loading">
+
+    Loading articles...
+
+</div>
+
+
+<div
+    id="errorBox"
+    class="error-box"
+    style="display:none;"
+>
+
+    <h2>
+        Unable to load articles
+    </h2>
+
+    <p>
+        Please check that:
+    </p>
+
+    <ul>
+
+        <li>
+            json/manifest.json exists
+        </li>
+
+        <li>
+            Article JSON files are inside the json folder
+        </li>
+
+        <li>
+            The manifest contains
+            <strong>"status": "published"</strong>
+        </li>
+
+        <li>
+            The website is being opened through
+            your web server/domain
+        </li>
+
+    </ul>
+
+    <div
+        id="errorDetails"
+        class="error-details"
+    ></div>
+
+</div>
+
+
+<main
+    id="articleGrid"
+    class="article-grid"
+    style="display:none;"
+>
+</main>
+
+
+<footer>
+
+    <strong>AztutMind</strong>
+
+    <br><br>
+
+    Learn Smart. Achieve More.
+
+</footer>
+
+
+<script>
+
+let allArticles = [];
+
+
+/* =================================================
+   JSON PATH
+================================================= */
+
+const JSON_FOLDER = "./json/";
+
+
+/* =================================================
+   LOAD ARTICLES
+================================================= */
+
+async function loadArticles() {
+
+    const loading =
+        document.getElementById("loading");
+
+    const grid =
+        document.getElementById("articleGrid");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+    const errorDetails =
+        document.getElementById("errorDetails");
+
+
+    try {
+
+        loading.style.display = "block";
+
+        grid.style.display = "none";
+
+        errorBox.style.display = "none";
+
+
+        /*
+         * STEP 1
+         * Load manifest
+         */
+
+        const manifestURL =
+            JSON_FOLDER +
+            "manifest.json?v=" +
+            Date.now();
+
+
+        console.log(
+            "Loading manifest:",
+            manifestURL
+        );
+
+
+        const manifestResponse =
+            await fetch(
+                manifestURL,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!manifestResponse.ok) {
+
+            throw new Error(
+                "Manifest HTTP error: " +
+                manifestResponse.status +
+                " " +
+                manifestResponse.statusText
+            );
+
+        }
+
+
+        const manifest =
+            await manifestResponse.json();
+
+
+        console.log(
+            "Manifest:",
+            manifest
+        );
+
+
+        if (!Array.isArray(manifest)) {
+
+            throw new Error(
+                "manifest.json must contain an array."
+            );
+
+        }
+
+
+        /*
+         * STEP 2
+         * Published articles only
+         */
+
+        const published =
+            manifest.filter(
+                item =>
+                    String(
+                        item.status || ""
+                    ).toLowerCase()
+                    === "published"
+            );
+
+
+        console.log(
+            "Published articles:",
+            published
+        );
+
+
+        if (published.length === 0) {
+
+            allArticles = [];
+
+            displayArticles([]);
+
+            loading.style.display = "none";
+
+            return;
+
+        }
+
+
+        /*
+         * STEP 3
+         * Load article JSON files
+         */
+
+        const loadedArticles = [];
+
+
+        for (const item of published) {
+
+            if (!item.file) {
+
+                console.error(
+                    "Manifest item has no file:",
+                    item
+                );
+
+                continue;
+
+            }
+
+
+            const articleURL =
+                JSON_FOLDER +
+                item.file +
+                "?v=" +
+                Date.now();
+
+
+            console.log(
+                "Loading article:",
+                articleURL
+            );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        articleURL,
+                        {
+                            cache: "no-store"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    console.error(
+                        "Article failed:",
+                        articleURL,
+                        response.status
+                    );
+
+                    continue;
+
+                }
+
+
+                const article =
+                    await response.json();
+
+
+                loadedArticles.push(
+                    article
+                );
+
+
+            } catch(articleError) {
+
+                console.error(
+                    "Article JSON error:",
+                    articleURL,
+                    articleError
+                );
+
+            }
+
+        }
+
+
+        /*
+         * STEP 4
+         */
+
+        allArticles =
+            loadedArticles.sort(
+                (a, b) =>
+                    new Date(b.date || 0) -
+                    new Date(a.date || 0)
+            );
+
+
+        populateCategories();
+
+        displayArticles(
+            allArticles
+        );
+
+
+        loading.style.display =
+            "none";
+
+
+    } catch(error) {
+
+        console.error(
+            "ARTICLE LOADING ERROR:",
+            error
+        );
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorDetails.textContent =
+            error.message +
+            "\n\nCurrent page:\n" +
+            window.location.href +
+            "\n\nManifest path:\n" +
+            JSON_FOLDER +
+            "manifest.json";
+
+
+    }
+
+}
+
+
+/* =================================================
+   CATEGORIES
+================================================= */
+
+function populateCategories() {
+
+    const select =
+        document.getElementById(
+            "categoryFilter"
+        );
+
+
+    const categories =
+        [
+            ...new Set(
+                allArticles
+                .map(
+                    article =>
+                        article.category
+                )
+                .filter(Boolean)
+            )
+        ]
+        .sort();
+
+
+    select.innerHTML =
+        `<option value="">
+            All Categories
+        </option>`;
+
+
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            category;
+
+        option.textContent =
+            category;
+
+        select.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+/* =================================================
+   FILTER
+================================================= */
+
+function applyFilters() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const category =
+        document.getElementById(
+            "categoryFilter"
+        )
+        .value;
+
+
+    const filtered =
+        allArticles.filter(article => {
+
+            const matchesSearch =
+                !search ||
+                String(
+                    article.title || ""
+                )
+                .toLowerCase()
+                .includes(search)
+                ||
+                String(
+                    article.summary || ""
+                )
+                .toLowerCase()
+                .includes(search)
+                ||
+                String(
+                    article.content || ""
+                )
+                .toLowerCase()
+                .includes(search);
+
+
+            const matchesCategory =
+                !category ||
+                article.category === category;
+
+
+            return (
+                matchesSearch &&
+                matchesCategory
+            );
+
+        });
+
+
+    displayArticles(
+        filtered
+    );
+
+}
+
+
+/* =================================================
+   DISPLAY
+================================================= */
+
+function displayArticles(
+    articles
+) {
+
+    const grid =
+        document.getElementById(
+            "articleGrid"
+        );
+
+
+    grid.style.display =
+        "grid";
+
+
+    if (
+        !articles ||
+        articles.length === 0
+    ) {
+
+        grid.innerHTML = `
+
+            <div class="empty">
+
+                No published articles found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML = "";
+
+
+    articles.forEach(article => {
+
+        const card =
+            document.createElement(
+                "article"
+            );
+
+
+        card.className =
+            "article-card";
+
+
+        let imageHTML;
+
+
+        if (article.image) {
+
+            imageHTML = `
+
+                <img
+                    class="card-image"
+                    src="${escapeAttribute(
+                        article.image
+                    )}"
+                    alt="${escapeAttribute(
+                        article.title
+                    )}"
+                    onerror="
+                        this.style.display='none';
+                    "
+                >
+
+            `;
+
+        } else {
+
+            imageHTML = `
+
+                <div class="card-placeholder">
+                    AztutMind
+                </div>
+
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            ${imageHTML}
+
+            <div class="card-content">
+
+                <div class="card-category">
+
+                    ${escapeHTML(
+                        article.category ||
+                        "Article"
+                    )}
+
+                </div>
+
+
+                <div class="card-title">
+
+                    ${escapeHTML(
+                        article.title ||
+                        "Untitled Article"
+                    )}
+
+                </div>
+
+
+                <div class="card-summary">
+
+                    ${escapeHTML(
+                        article.summary ||
+                        ""
+                    )}
+
+                </div>
+
+
+                <div class="card-meta">
+
+                    ${escapeHTML(
+                        article.author ||
+                        "AztutMind"
+                    )}
+
+                    &nbsp; • &nbsp;
+
+                    ${formatDate(
+                        article.date
+                    )}
+
+                </div>
+
+
+                <a
+                    class="read-more"
+                    href="article.html?id=${encodeURIComponent(
+                        article.id
+                    )}"
+                >
+
+                    Read Article →
+
+                </a>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(
+            card
+        );
+
+    });
+
+}
+
+
+/* =================================================
+   DATE
+================================================= */
+
+function formatDate(
+    dateString
+) {
+
+    if (!dateString) {
+        return "";
+    }
+
+
+    const date =
+        new Date(dateString);
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return dateString;
+
+    }
+
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+/* =================================================
+   SECURITY
+================================================= */
+
+function escapeHTML(value) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
+
+}
+
+
+/* =================================================
+   START
+================================================= */
+
+loadArticles();
+
+</script>
+
+</body>
+
+</html>
