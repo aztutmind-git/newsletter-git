@@ -25,5 +25,14 @@
         "date": "2026-09-17",
         "status": "published",
         "slug": "management"
+    },
+    {
+        "id": "article-004",
+        "file": "article-004.json",
+        "title": "Real Options Theory in Strategic Management",
+        "category": "Management",
+        "date": "2026-09-17",
+        "status": "published",
+        "slug": "real-options-theory-in-strategic-management"
     }
 ]
