@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Academic Article Theme Engine</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   BASE
+========================================================= */
+
+:root{
+    --accent:#315f9e;
+    --accent2:#5b7db1;
+    --text:#202733;
+    --muted:#687386;
+    --bg:#eef2f7;
+    --paper:#ffffff;
+    --soft:#f5f7fa;
+    --border:#dce2ea;
+    --shadow:0 12px 35px rgba(20,40,70,.10);
+    --radius:16px;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"DM Sans",sans-serif;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    display:grid;
+    grid-template-columns:360px 1fr;
+    min-height:100vh;
+}
+
+.control-panel{
+    background:#101722;
+    color:white;
+    padding:24px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow:auto;
+}
+
+.control-panel h1{
+    font-size:21px;
+    margin:0 0 5px;
+}
+
+.control-panel .subtitle{
+    color:#9da9ba;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.control-group{
+    margin-bottom:20px;
+}
+
+.control-group label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    margin-bottom:7px;
+    color:#b9c3d1;
+}
+
+textarea,
+select,
+input{
+    width:100%;
+    border:1px solid #394454;
+    background:#1a2432;
+    color:white;
+    border-radius:10px;
+    padding:10px 12px;
+    font:inherit;
+    outline:none;
+}
+
+textarea{
+    min-height:180px;
+    resize:vertical;
+}
+
+select:focus,
+textarea:focus,
+input:focus{
+    border-color:#6f96d0;
+}
+
+.control-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.checkbox-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:8px 0;
+    color:#d8dee8;
+    font-size:13px;
+}
+
+.checkbox-row input{
+    width:auto;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:11px 14px;
+    font:600 13px "DM Sans",sans-serif;
+    cursor:pointer;
+}
+
+.primary{
+    background:#4f7fc5;
+    color:white;
+    width:100%;
+}
+
+.secondary{
+    background:#273344;
+    color:white;
+    width:100%;
+}
+
+.button-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:10px;
+}
+
+.preview-area{
+    padding:35px;
+    overflow:auto;
+}
+
+/* =========================================================
+   ARTICLE
+========================================================= */
+
+.article{
+    max-width:1050px;
+    margin:auto;
+    background:var(--paper);
+    box-shadow:var(--shadow);
+    border-radius:var(--radius);
+    overflow:hidden;
+}
+
+.article-header{
+    padding:70px 75px 50px;
+    border-bottom:1px solid var(--border);
+}
+
+.article-kicker{
+    color:var(--accent);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+.article-title{
+    font-family:"Libre Baskerville",serif;
+    font-size:46px;
+    line-height:1.18;
+    margin:0 0 22px;
+    color:var(--text);
+}
+
+.article-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.article-body{
+    padding:45px 75px 80px;
+}
+
+.article-body p{
+    font-size:17px;
+    line-height:1.82;
+    margin:0 0 23px;
+}
+
+.article-body h2{
+    font-size:29px;
+    margin:55px 0 20px;
+    color:var(--text);
+}
+
+.article-body h3{
+    font-size:21px;
+    margin:38px 0 15px;
+    color:var(--accent);
+}
+
+.article-body ul,
+.article-body ol{
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+.article-body li{
+    margin-bottom:7px;
+}
+
+/* =========================================================
+   ABSTRACT
+========================================================= */
+
+.abstract{
+    background:var(--soft);
+    border-left:5px solid var(--accent);
+    padding:24px 27px;
+    margin:30px 0;
+    border-radius:0 12px 12px 0;
+}
+
+.abstract-title{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+}
+
+/* =========================================================
+   KEYWORDS
+========================================================= */
+
+.keywords{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:18px 0 30px;
+}
+
+.keyword{
+    background:#edf3fb;
+    color:var(--accent);
+    border:1px solid #d6e2f2;
+    padding:6px 11px;
+    border-radius:999px;
+    font-size:12px;
+}
+
+/* =========================================================
+   TOC
+========================================================= */
+
+.toc{
+    margin:30px 0 45px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    background:#fbfcfe;
+}
+
+.toc-header{
+    padding:17px 21px;
+    background:var(--accent);
+    color:white;
+    font-weight:700;
+}
+
+.toc-body{
+    padding:17px 23px;
+}
+
+.toc a{
+    color:var(--text);
+    text-decoration:none;
+    display:block;
+    padding:6px 0;
+    font-size:14px;
+}
+
+.toc a:hover{
+    color:var(--accent);
+}
+
+.toc .toc-h3{
+    padding-left:20px;
+    font-size:13px;
+    color:var(--muted);
+}
+
+/* =========================================================
+   ACADEMIC CARDS
+========================================================= */
+
+.academic-card{
+    margin:30px 0;
+    padding:24px 27px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:#fff;
+}
+
+.card-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-weight:800;
+    color:var(--accent);
+    margin-bottom:10px;
+}
+
+.definition{
+    background:#f4f8fd;
+    border-left:5px solid var(--accent);
+}
+
+.insight{
+    background:linear-gradient(135deg,#f8fbff,#eef5ff);
+    box-shadow:0 10px 25px rgba(49,95,158,.09);
+}
+
+.research-gap{
+    background:#fff9ed;
+    border-left:5px solid #d49a32;
+}
+
+.research-question{
+    background:#f5f2ff;
+    border-left:5px solid #8066bd;
+}
+
+.hypothesis{
+    background:#f0faf5;
+    border-left:5px solid #4d956e;
+}
+
+.methodology{
+    background:#f4f6f8;
+    border-top:4px solid #55606f;
+}
+
+.findings{
+    background:#eef8f7;
+    border-left:5px solid #3e9289;
+}
+
+.discussion{
+    background:#f8f4ed;
+    border-left:5px solid #9a7650;
+}
+
+.implication{
+    background:#eef7ff;
+    border-left:5px solid #397bb5;
+}
+
+.limitations{
+    background:#faf1f1;
+    border-left:5px solid #aa5b5b;
+}
+
+.future{
+    background:#f3f7f1;
+    border-left:5px solid #6d8b61;
+}
+
+.pullquote{
+    margin:35px 0;
+    padding:30px 35px;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    font-family:"Libre Baskerville",serif;
+    font-size:24px;
+    line-height:1.5;
+    color:var(--accent);
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+    margin:30px 0;
+}
+
+.article table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+.article th{
+    background:var(--accent);
+    color:white;
+    text-align:left;
+    padding:12px;
+}
+
+.article td{
+    padding:11px 12px;
+    border-bottom:1px solid var(--border);
+}
+
+.article tr:nth-child(even){
+    background:#f8fafc;
+}
+
+.table-caption{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+/* =========================================================
+   FIGURE PLACEHOLDER
+========================================================= */
+
+.figure-card{
+    margin:35px 0;
+    text-align:center;
+}
+
+.figure-placeholder{
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(135deg,#f3f6fa,#e8edf4);
+    border:1px dashed #aeb9c8;
+    border-radius:14px;
+    color:#788597;
+}
+
+.figure-caption{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:10px;
+}
+
+/* =========================================================
+   REFERENCES
+========================================================= */
+
+.references{
+    border-top:2px solid var(--text);
+    margin-top:60px;
+    padding-top:25px;
+}
+
+.references p{
+    font-size:14px;
+    line-height:1.7;
+    padding-left:25px;
+    text-indent:-25px;
+}
+
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
+
+.progress-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    height:4px;
+    width:0;
+    background:var(--accent);
+    z-index:9999;
+}
+
+/* =========================================================
+   THEME: MODERN RESEARCH
+========================================================= */
+
+.theme-modern{
+    --accent:#315f9e;
+    --paper:#ffffff;
+    --bg:#edf2f7;
+}
+
+/* =========================================================
+   THEME: CLASSIC
+========================================================= */
+
+.theme-classic{
+    --accent:#333333;
+    --paper:#fffdf8;
+    --bg:#e9e5dc;
+    --border:#d8d1c4;
+    --text:#27231e;
+    --muted:#6d655a;
+    --radius:4px;
+}
+
+.theme-classic .article-title,
+.theme-classic .article-body{
+    font-family:"Source Serif 4",serif;
+}
+
+.theme-classic .article-body p{
+    font-size:17px;
+    line-height:1.9;
+}
+
+/* =========================================================
+   THEME: EDITORIAL
+========================================================= */
+
+.theme-editorial{
+    --accent:#7b3949;
+    --paper:#fff;
+    --bg:#eee9e5;
+}
+
+.theme-editorial .article-title{
+    font-family:"Playfair Display",serif;
+    font-size:58px;
+}
+
+.theme-editorial .article-header{
+    border-bottom:5px solid var(--accent);
+}
+
+/* =========================================================
+   THEME: MINIMAL
+========================================================= */
+
+.theme-minimal{
+    --accent:#222;
+    --paper:#fff;
+    --bg:#fff;
+    --border:#eeeeee;
+    --shadow:none;
+    --radius:0;
+}
+
+.theme-minimal .article-header{
+    padding-top:90px;
+}
+
+.theme-minimal .academic-card{
+    border-radius:0;
+    box-shadow:none;
+}
+
+/* =========================================================
+   THEME: AZTUTMIND
+========================================================= */
+
+.theme-aztutmind{
+    --accent:#176b87;
+    --accent2:#2b9ab0;
+    --paper:#ffffff;
+    --bg:#eaf5f7;
+    --border:#d4e7eb;
+}
+
+.theme-aztutmind .article{
+    box-shadow:0 20px 60px rgba(20,80,100,.13);
+}
+
+.theme-aztutmind .article-header{
+    background:
+        radial-gradient(circle at 90% 10%,rgba(43,154,176,.18),transparent 35%),
+        linear-gradient(135deg,#ffffff,#f1fafb);
+}
+
+.theme-aztutmind .article-title{
+    font-family:"DM Sans",sans-serif;
+    font-weight:700;
+}
+
+.theme-aztutmind .academic-card{
+    box-shadow:0 8px 24px rgba(20,80,100,.07);
+}
+
+/* =========================================================
+   THEME: EXECUTIVE
+========================================================= */
+
+.theme-executive{
+    --accent:#183b63;
+    --paper:#fff;
+    --bg:#e8edf2;
+}
+
+.theme-executive .article-header{
+    background:#142b45;
+    color:white;
+}
+
+.theme-executive .article-header .article-title{
+    color:white;
+}
+
+.theme-executive .article-meta{
+    color:#c6d1dd;
+}
+
+.theme-executive .article-title{
+    font-family:"Inter",sans-serif;
+    font-size:43px;
+}
+
+/* =========================================================
+   THEME: RESEARCH LAB
+========================================================= */
+
+.theme-lab{
+    --accent:#275d70;
+    --paper:#fbfcfd;
+    --bg:#e6ecef;
+    --border:#cfd9df;
+    --radius:8px;
+}
+
+.theme-lab .article{
+    border:1px solid var(--border);
+}
+
+.theme-lab .article-title{
+    font-family:"Inter",sans-serif;
+    letter-spacing:-.03em;
+}
+
+.theme-lab .academic-card{
+    border-radius:8px;
+}
+
+/* =========================================================
+   THEME: HUMANITIES
+========================================================= */
+
+.theme-humanities{
+    --accent:#704c35;
+    --paper:#fcfaf5;
+    --bg:#e7e0d6;
+    --text:#332a24;
+    --muted:#75695e;
+    --border:#ddd2c3;
+    --radius:3px;
+}
+
+.theme-humanities .article-title{
+    font-family:"Playfair Display",serif;
+}
+
+.theme-humanities .article-body{
+    font-family:"Source Serif 4",serif;
+}
+
+.theme-humanities .pullquote{
+    font-family:"Playfair Display",serif;
+}
+
+/* =========================================================
+   THEME: DARK ACADEMIC
+========================================================= */
+
+.theme-dark{
+    --accent:#79a9dc;
+    --paper:#151b24;
+    --bg:#090d13;
+    --text:#e8edf4;
+    --muted:#9da8b7;
+    --border:#303b49;
+    --soft:#1d2632;
+    --shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+.theme-dark .article{
+    border:1px solid #303b49;
+}
+
+.theme-dark .article-title{
+    color:#f2f6fb;
+}
+
+.theme-dark .academic-card,
+.theme-dark .toc{
+    background:#1a222d;
+}
+
+.theme-dark .toc a{
+    color:#dbe3ed;
+}
+
+.theme-dark .article tr:nth-child(even){
+    background:#1b2430;
+}
+
+.theme-dark .article td{
+    border-color:#303b49;
+}
+
+.theme-dark .abstract{
+    background:#1b2430;
+}
+
+/* =========================================================
+   EFFECTS
+========================================================= */
+
+.effect-soft .academic-card{
+    border-radius:20px;
+}
+
+.effect-shadow .academic-card{
+    box-shadow:0 12px 30px rgba(20,40,70,.12);
+}
+
+.effect-glow .academic-card{
+    box-shadow:
+        0 0 0 1px rgba(49,95,158,.08),
+        0 0 25px rgba(49,95,158,.13);
+}
+
+.effect-reflection .academic-card{
+    position:relative;
+    overflow:hidden;
+}
+
+.effect-reflection .academic-card::after{
+    content:"";
+    position:absolute;
+    top:-70%;
+    left:-30%;
+    width:30%;
+    height:220%;
+    transform:rotate(25deg);
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.45),
+        transparent
+    );
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    .control-panel,
+    .progress-bar{
+        display:none !important;
+    }
+
+    .preview-area{
+        padding:0;
+    }
+
+    .article{
+        box-shadow:none;
+        max-width:none;
+    }
+
+    .article-body h2{
+        break-before:auto;
+    }
+
+    .academic-card,
+    table,
+    .figure-card{
+        break-inside:avoid;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .app{
+        grid-template-columns:1fr;
+    }
+
+    .control-panel{
+        position:relative;
+        height:auto;
+    }
+
+    .preview-area{
+        padding:15px;
+    }
+
+    .article-header{
+        padding:40px 25px;
+    }
+
+    .article-body{
+        padding:30px 25px 60px;
+    }
+
+    .article-title{
+        font-size:34px;
+    }
+
+    .article-body p{
+        font-size:16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="app">
+
+<!-- =====================================================
+     CONTROL PANEL
+===================================================== -->
+
+<aside class="control-panel">
+
+    <h1>Academic Article Theme Engine</h1>
+
+    <div class="subtitle">
+        Convert plain academic text into a structured research article.
+    </div>
+
+    <div class="control-group">
+
+        <label>Paste Article Text</label>
+
+        <textarea id="inputText" placeholder="Paste your academic article here..."></textarea>
+
+    </div>
+
+    <div class="control-group">
+
+        <label>Theme</label>
+
+        <select id="theme">
+            <option value="theme-modern">Modern Research Journal</option>
+            <option value="theme-classic">Classic Academic</option>
+            <option value="theme-editorial">Editorial Academic</option>
+            <option value="theme-minimal">Minimalist Research</option>
+            <option value="theme-aztutmind">AztutMind Academic</option>
+            <option value="theme-executive">Executive Research</option>
+            <option value="theme-lab">Research Lab</option>
+            <option value="theme-humanities">Humanities Journal</option>
+            <option value="theme-dark">Dark Academic</option>
+        </select>
+
+    </div>
+
+    <div class="control-group">
+
+        <label>Table of Contents</label>
+
+        <select id="tocMode">
+            <option value="none">None</option>
+            <option value="compact">Compact TOC</option>
+            <option value="full">Full TOC with Subsections</option>
+        </select>
+
+    </div>
+
+    <div class="control-group">
+
+        <label>Visual Effect</label>
+
+        <select id="effect">
+            <option value="effect-none">None</option>
+            <option value="effect-soft">Soft Edges</option>
+            <option value="effect-shadow">Academic Shadow</option>
+            <option value="effect-glow">Soft Glow</option>
+            <option value="effect-reflection">Reflection</option>
+        </select>
+
+    </div>
+
+    <div class="control-group">
+
+        <label>Article Metadata</label>
+
+        <div class="control-row">
+
+            <input id="author" placeholder="Author">
+
+            <input id="date" placeholder="Date">
+
+        </div>
+
+        <br>
+
+        <input id="affiliation" placeholder="Affiliation / University">
+
+    </div>
+
+    <div class="control-group">
+
+        <label>Display Options</label>
+
+        <label class="checkbox-row">
+            <input type="checkbox" id="showAbstract" checked>
+            Abstract styling
+        </label>
+
+        <label class="checkbox-row">
+            <input type="checkbox" id="showKeywords" checked>
+            Keyword styling
+        </label>
+
+        <label class="checkbox-row">
+            <input type="checkbox" id="showProgress" checked>
+            Reading progress
+        </label>
+
+    </div>
+
+    <button class="primary" onclick="convertArticle()">
+        Convert Article
+    </button>
+
+    <div class="button-grid">
+
+        <button class="secondary" onclick="copyHTML()">
+            Copy HTML
+        </button>
+
+        <button class="secondary" onclick="downloadHTML()">
+            Download
+        </button>
+
+        <button class="secondary" onclick="window.print()">
+            Print / PDF
+        </button>
+
+        <button class="secondary" onclick="clearAll()">
+            Clear
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     PREVIEW
+===================================================== -->
+
+<main class="preview-area">
+
+    <div id="preview"></div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+function escapeHTML(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;");
+
+}
+
+
+function inlineFormat(text){
+
+    text = escapeHTML(text);
+
+    text = text.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+    );
+
+    text = text.replace(
+        /\*(.*?)\*/g,
+        "<em>$1</em>"
+    );
+
+    return text;
+
+}
+
+
+/* =========================================================
+   SEMANTIC LABELS
+========================================================= */
+
+const academicLabels = {
+
+    "abstract":"abstract",
+    "definition":"definition",
+    "core definition":"definition",
+    "concept":"definition",
+
+    "key insight":"insight",
+    "strategic insight":"insight",
+    "so what":"insight",
+
+    "research gap":"research-gap",
+    "research question":"research-question",
+    "research questions":"research-question",
+
+    "hypothesis":"hypothesis",
+    "hypotheses":"hypothesis",
+
+    "methodology":"methodology",
+    "method":"methodology",
+
+    "findings":"findings",
+    "results":"findings",
+
+    "discussion":"discussion",
+
+    "managerial implications":"implication",
+    "managerial implication":"implication",
+    "implications":"implication",
+    "implication":"implication",
+
+    "limitations":"limitations",
+    "limitation":"limitations",
+
+    "future research":"future",
+    "research agenda":"future"
+
+};
+
+
+/* =========================================================
+   HEADING DETECTION
+========================================================= */
+
+function detectHeading(line){
+
+    if(/^#{1,3}\s+/.test(line)){
+        return line.replace(/^#{1,3}\s+/,"");
+    }
+
+    if(
+        /^\d+\.\s+[A-Z]/.test(line) ||
+        /^\d+\.\d+\s+[A-Z]/.test(line) ||
+        /^\d+\.\d+\.\d+\s+[A-Z]/.test(line)
+    ){
+        return line;
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   TABLE DETECTION
+========================================================= */
+
+function isTableLine(line){
+
+    return line.includes("|");
+
+}
+
+
+function buildTable(rows){
+
+    if(rows.length < 2) return "";
+
+    const cells = rows.map(row =>
+        row.split("|")
+            .map(x => x.trim())
+            .filter(Boolean)
+    );
+
+    let html = `
+        <div class="table-wrap">
+        <table>
+    `;
+
+    html += "<thead><tr>";
+
+    cells[0].forEach(cell=>{
+        html += `<th>${inlineFormat(cell)}</th>`;
+    });
+
+    html += "</tr></thead><tbody>";
+
+    for(let i=1;i<cells.length;i++){
+
+        html += "<tr>";
+
+        cells[i].forEach(cell=>{
+            html += `<td>${inlineFormat(cell)}</td>`;
+        });
+
+        html += "</tr>";
+
+    }
+
+    html += "</tbody></table></div>";
+
+    return html;
+
+}
+
+
+/* =========================================================
+   ACADEMIC CARD
+========================================================= */
+
+function academicCard(label,content,type){
+
+    return `
+        <div class="academic-card ${type}">
+            <div class="card-label">${label}</div>
+            <div>${inlineFormat(content)}</div>
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   PARSER
+========================================================= */
+
+function parseArticle(text){
+
+    const lines = text
+        .split(/\r?\n/)
+        .map(x=>x.trim());
+
+    let title = "";
+    let html = "";
+    let headings = [];
+
+    let firstFound = false;
+    let paragraphBuffer = [];
+    let tableBuffer = [];
+
+    function flushParagraph(){
+
+        if(!paragraphBuffer.length) return;
+
+        const paragraph = paragraphBuffer.join(" ");
+
+        const labelMatch = paragraph.match(
+            /^([^:]+):\s*(.+)$/
+        );
+
+        if(labelMatch){
+
+            const label = labelMatch[1]
+                .trim()
+                .toLowerCase();
+
+            if(academicLabels[label]){
+
+                html += academicCard(
+                    labelMatch[1],
+                    labelMatch[2],
+                    academicLabels[label]
+                );
+
+                paragraphBuffer=[];
+                return;
+
+            }
+
+        }
+
+        html += `<p>${inlineFormat(paragraph)}</p>`;
+
+        paragraphBuffer=[];
+
+    }
+
+    function flushTable(){
+
+        if(tableBuffer.length){
+
+            html += buildTable(tableBuffer);
+
+            tableBuffer=[];
+
+        }
+
+    }
+
+
+    for(let i=0;i<lines.length;i++){
+
+        const line = lines[i];
+
+        if(!line){
+
+            flushParagraph();
+            flushTable();
+            continue;
+
+        }
+
+
+        /* First non-empty line becomes title */
+
+        if(!firstFound){
+
+            title = line
+                .replace(/^#\s+/,"")
+                .trim();
+
+            firstFound=true;
+            continue;
+
+        }
+
+
+        /* Table */
+
+        if(isTableLine(line)){
+
+            flushParagraph();
+
+            tableBuffer.push(line);
+
+            continue;
+
+        }else{
+
+            flushTable();
+
+        }
+
+
+        /* Heading */
+
+        const heading = detectHeading(line);
+
+        if(heading){
+
+            flushParagraph();
+
+            let level = "h2";
+
+            if(
+                /^\d+\.\d+/.test(heading) ||
+                /^###/.test(line)
+            ){
+                level="h3";
+            }
+
+            const id =
+                "section-" +
+                headings.length;
+
+            headings.push({
+                id,
+                text:heading,
+                level
+            });
+
+            html += `
+                <${level} id="${id}">
+                    ${inlineFormat(heading)}
+                </${level}>
+            `;
+
+            continue;
+
+        }
+
+
+        /* Bullet list */
+
+        if(/^[-*•]\s+/.test(line)){
+
+            flushParagraph();
+
+            let items=[];
+
+            while(
+                i<lines.length &&
+                /^[-*•]\s+/.test(lines[i])
+            ){
+
+                items.push(
+                    lines[i].replace(/^[-*•]\s+/,"")
+                );
+
+                i++;
+
+            }
+
+            i--;
+
+            html += "<ul>";
+
+            items.forEach(item=>{
+                html += `<li>${inlineFormat(item)}</li>`;
+            });
+
+            html += "</ul>";
+
+            continue;
+
+        }
+
+
+        /* Numbered list */
+
+        if(/^\d+\)\s+/.test(line)){
+
+            flushParagraph();
+
+            let items=[];
+
+            while(
+                i<lines.length &&
+                /^\d+\)\s+/.test(lines[i])
+            ){
+
+                items.push(
+                    lines[i].replace(/^\d+\)\s+/,"")
+                );
+
+                i++;
+
+            }
+
+            i--;
+
+            html += "<ol>";
+
+            items.forEach(item=>{
+                html += `<li>${inlineFormat(item)}</li>`;
+            });
+
+            html += "</ol>";
+
+            continue;
+
+        }
+
+
+        /* Quote */
+
+        if(
+            line.startsWith(">") ||
+            line.startsWith('"') ||
+            line.startsWith("“")
+        ){
+
+            flushParagraph();
+
+            let quote = line
+                .replace(/^>\s*/,"")
+                .replace(/^["“]/,"")
+                .replace(/["”]$/,"");
+
+            html += `
+                <div class="pullquote">
+                    ${inlineFormat(quote)}
+                </div>
+            `;
+
+            continue;
+
+        }
+
+
+        /* Figure */
+
+        if(/^Figure\s+\d+/i.test(line)){
+
+            flushParagraph();
+
+            html += `
+                <div class="figure-card">
+                    <div class="figure-placeholder">
+                        Visual / Figure Placeholder
+                    </div>
+                    <div class="figure-caption">
+                        ${inlineFormat(line)}
+                    </div>
+                </div>
+            `;
+
+            continue;
+
+        }
+
+
+        /* Normal paragraph */
+
+        paragraphBuffer.push(line);
+
+    }
+
+    flushParagraph();
+    flushTable();
+
+
+    return {
+        title,
+        html,
+        headings
+    };
+
+}
+
+
+/* =========================================================
+   TOC
+========================================================= */
+
+function buildTOC(headings,mode){
+
+    if(mode==="none" || !headings.length){
+        return "";
+    }
+
+    let html=`
+        <div class="toc">
+            <div class="toc-header">
+                Table of Contents
+            </div>
+            <div class="toc-body">
+    `;
+
+    headings.forEach(item=>{
+
+        if(
+            mode==="compact" &&
+            item.level==="h3"
+        ){
+            return;
+        }
+
+        const cls =
+            item.level==="h3"
+            ? "toc-h3"
+            : "";
+
+        html += `
+            <a class="${cls}" href="#${item.id}">
+                ${item.text}
+            </a>
+        `;
+
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    return html;
+
+}
+
+
+/* =========================================================
+   CONVERT
+========================================================= */
+
+function convertArticle(){
+
+    const text =
+        document.getElementById("inputText").value.trim();
+
+    if(!text){
+
+        alert("Please paste your article text first.");
+
+        return;
+
+    }
+
+
+    const result = parseArticle(text);
+
+    const theme =
+        document.getElementById("theme").value;
+
+    const effect =
+        document.getElementById("effect").value;
+
+    const tocMode =
+        document.getElementById("tocMode").value;
+
+    const author =
+        document.getElementById("author").value;
+
+    const date =
+        document.getElementById("date").value;
+
+    const affiliation =
+        document.getElementById("affiliation").value;
+
+
+    let metadata=[];
+
+    if(author) metadata.push(author);
+    if(affiliation) metadata.push(affiliation);
+    if(date) metadata.push(date);
+
+
+    const showProgress =
+        document.getElementById("showProgress").checked;
+
+    document
+        .getElementById("progressBar")
+        .style.display =
+            showProgress ? "block" : "none";
+
+
+    const toc =
+        buildTOC(result.headings,tocMode);
+
+
+    const articleHTML = `
+
+        <article class="article ${theme} ${effect}">
+
+            <header class="article-header">
+
+                <div class="article-kicker">
+                    Academic Research Article
+                </div>
+
+                <h1 class="article-title">
+                    ${inlineFormat(result.title)}
+                </h1>
+
+                ${
+                    metadata.length
+                    ?
+                    `
+                    <div class="article-meta">
+                        ${metadata.map(x=>`<span>${inlineFormat(x)}</span>`).join(" · ")}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+            </header>
+
+            <div class="article-body">
+
+                ${toc}
+
+                ${result.html}
+
+            </div>
+
+        </article>
+
+    `;
+
+
+    document.getElementById("preview").innerHTML =
+        articleHTML;
+
+}
+
+
+/* =========================================================
+   COPY HTML
+========================================================= */
+
+function copyHTML(){
+
+    const preview =
+        document.getElementById("preview");
+
+    if(!preview.innerHTML.trim()){
+
+        convertArticle();
+
+    }
+
+    navigator.clipboard.writeText(
+        preview.innerHTML
+    );
+
+    alert("Article HTML copied.");
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+function downloadHTML(){
+
+    const preview =
+        document.getElementById("preview");
+
+    if(!preview.innerHTML.trim()){
+
+        convertArticle();
+
+    }
+
+    const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Academic Article</title>
+
+<style>
+
+${document.querySelector("style").innerHTML}
+
+</style>
+
+</head>
+
+<body>
+
+${preview.innerHTML}
+
+</body>
+</html>
+`;
+
+    const blob =
+        new Blob(
+            [html],
+            {type:"text/html"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href=url;
+    a.download="academic-article.html";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+function clearAll(){
+
+    document.getElementById("inputText").value="";
+    document.getElementById("preview").innerHTML="";
+
+}
+
+
+/* =========================================================
+   REACTIVE THEME
+========================================================= */
+
+document
+    .getElementById("theme")
+    .addEventListener("change",convertArticle);
+
+document
+    .getElementById("tocMode")
+    .addEventListener("change",convertArticle);
+
+document
+    .getElementById("effect")
+    .addEventListener("change",convertArticle);
+
+
+/* =========================================================
+   READING PROGRESS
+========================================================= */
+
+window.addEventListener("scroll",()=>{
+
+    const article =
+        document.querySelector(".article");
+
+    if(!article) return;
+
+    const progress =
+        document.getElementById("progressBar");
+
+    const top =
+        article.offsetTop;
+
+    const height =
+        article.offsetHeight;
+
+    const current =
+        window.scrollY - top;
+
+    const percentage =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                (current / height) * 100
+            )
+        );
+
+    progress.style.width =
+        percentage + "%";
+
+});
+
+
+/* =========================================================
+   INITIAL SAMPLE
+========================================================= */
+
+document.getElementById("inputText").value =
+
+`Navigating Uncertainty: A Strategic Framework for Real Options Theory in Corporate Decision-Making
+
+Abstract
+
+Real Options Theory provides a framework for understanding managerial flexibility under uncertainty. It extends traditional investment analysis by recognizing the value of waiting, staging, expanding, contracting, switching, or abandoning strategic commitments.
+
+Keywords: Real Options, Strategic Management, Uncertainty, Flexibility, Investment Decision-Making
+
+1. Introduction
+
+Organizations frequently make investment decisions in environments characterized by uncertainty, incomplete information, competitive interaction, and technological change. Traditional capital budgeting approaches may not fully capture the value of managerial flexibility.
+
+2. Foundational Mechanics
+
+Definition: Real options represent opportunities available to managers to alter the timing, scale, or direction of an investment as uncertainty unfolds.
+
+2.1 Strategic Flexibility
+
+Managers may defer investment until additional information becomes available.
+
+Research Gap: Traditional investment models may underrepresent the strategic value associated with managerial flexibility.
+
+3. Taxonomy of Real Options
+
+Option to defer, option to expand, option to contract, option to switch, and option to abandon represent different forms of strategic flexibility.
+
+4. Managerial Implications
+
+Strategic decision makers can incorporate uncertainty, competitive dynamics, and organizational flexibility into investment decisions.
+
+5. Conclusion
+
+Real Options Theory provides a structured way to evaluate strategic commitments while preserving future choices.
+
+References
+
+Trigeorgis, L. (1996). Real Options: Managerial Flexibility and Strategy in Resource Allocation.`;
+
+
+/* Convert initially */
+
+convertArticle();
+
+</script>
+
+</body>
+</html>
