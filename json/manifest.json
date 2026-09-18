@@ -34,5 +34,14 @@
         "date": "2026-09-17",
         "status": "published",
         "slug": "real-options-theory-in-strategic-management"
+    },
+    {
+        "id": "article-005",
+        "file": "article-005.json",
+        "title": "The LinkedIn Dependency: How Corporate Over-Reliance on a Single Platform is Warping Global Employment",
+        "category": "Career",
+        "date": "2026-09-18",
+        "status": "draft",
+        "slug": "the-linkedin-dependency-how-corporate-over-reliance-on-a-single-platform-is-warping-global-employment"
     }
 ]
