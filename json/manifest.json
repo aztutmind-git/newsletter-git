@@ -43,5 +43,14 @@
         "date": "2026-09-18",
         "status": "draft",
         "slug": "the-linkedin-dependency-how-corporate-over-reliance-on-a-single-platform-is-warping-global-employment"
+    },
+    {
+        "id": "article-006",
+        "file": "article-006.json",
+        "title": "Qualitative Research and Its Role in Decision-Making",
+        "category": "Leadership",
+        "date": "2026-10-07",
+        "status": "published",
+        "slug": "qualitative-research-and-its-role-in-decision-making"
     }
 ]
